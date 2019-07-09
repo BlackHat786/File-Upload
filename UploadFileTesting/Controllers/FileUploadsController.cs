@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UploadFileTesting.Models;
-
+//Coded By BlackHat786
 namespace UploadFileTesting.Controllers
 {
     public class FileUploadsController : Controller
@@ -57,6 +57,20 @@ namespace UploadFileTesting.Controllers
                 return HttpNotFound();
             }
             return View(fileUpload);
+        }
+
+
+        public FileContentResult FileDownload(int? id)
+        {
+            byte[] fileData;
+            string fileName;
+
+            FileUpload fileRecord = db.FileUploads.Find(id);
+
+            fileData = (byte[])fileRecord.File.ToArray();
+            fileName = fileRecord.FileName;
+
+            return File(fileData, "text", fileName);
         }
 
         // POST: FileUploads/Delete/5
